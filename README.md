@@ -22,5 +22,8 @@ See [README.md](./400/README.md)
 ## 500 - Installing OpenFaaS
 See [README.md](./500/README.md)
 
-## 600 - Access OpenFaaS UI (OpenFaaS Portal)
+## 600 - Acquire Password for OpenFaaS UI (OpenFaaS Portal)
 See [README.md](./600/README.md)
+
+## 700 - Access OpenFaaS UI (OpenFaaS Portal)
+See [README.md](./700/README.md)
