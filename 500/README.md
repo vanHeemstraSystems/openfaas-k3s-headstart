@@ -1,5 +1,7 @@
 # 500 - Installing OpenFaaS
 
+## 100 - Installation
+
 Installing OpenFaaS with ```arkade``` is extremely simple and you can get the installation done by executing this command:
 
 ```$ arkade install openfaas```
@@ -151,6 +153,82 @@ To address the following warning:
 
 Change the permissions on this file as follows:
 
-```sudo chmod 600 /home/cloud_user/.kube/config```
+```
+$ cd ~/.kube
+$ ls -la
+-rw-rw-r--.  1 cloud_user cloud_user 2961 May  7 14:10 config
+$ sudo chmod 600 config```
+$ ls -la
+-rw-------.  1 cloud_user cloud_user 2961 May  7 14:10 config
+```
 
+Try once more:
 
+```$ arkade install openfaas```
+
+It will give an errorless result, as so:
+
+```
+Using Kubeconfig: /home/cloud_user/.kube/config
+[Warning] unable to create secret basic-auth, may already exist: Error from server (AlreadyExists): secrets "basic-auth" already exists
+Client: x86_64, Linux
+2021/05/07 14:18:46 User dir established as: /home/cloud_user/.arkade/
+"openfaas" already exists with the same configuration, skipping
+
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "openfaas" chart repository
+Update Complete. ⎈Happy Helming!⎈
+
+VALUES values.yaml
+Command: /home/cloud_user/.arkade/bin/helm [upgrade --install openfaas openfaas/openfaas --namespace openfaas --values /tmp/charts/openfaas/values.yaml --set basicAuthPlugin.replicas=1 --set ingressOperator.create=false --set clusterRole=false --set gateway.directFunctions=false --set faasnetes.imagePullPolicy=Always --set queueWorker.replicas=1 --set queueWorker.maxInflight=1 --set basic_auth=true --set serviceType=NodePort --set operator.create=false --set openfaasImagePullPolicy=IfNotPresent --set gateway.replicas=1]
+Release "openfaas" has been upgraded. Happy Helming!
+NAME: openfaas
+LAST DEPLOYED: Fri May  7 14:18:47 2021
+NAMESPACE: openfaas
+STATUS: deployed
+REVISION: 2
+TEST SUITE: None
+NOTES:
+To verify that openfaas has started, run:
+
+  kubectl -n openfaas get deployments -l "release=openfaas, app=openfaas"
+=======================================================================
+= OpenFaaS has been installed.                                        =
+=======================================================================
+
+# Get the faas-cli
+curl -SLsf https://cli.openfaas.com | sudo sh
+
+# Forward the gateway to your machine
+kubectl rollout status -n openfaas deploy/gateway
+kubectl port-forward -n openfaas svc/gateway 8080:8080 &
+
+# If basic auth is enabled, you can now log into your gateway:
+PASSWORD=$(kubectl get secret -n openfaas basic-auth -o jsonpath="{.data.basic-auth-password}" | base64 --decode; echo)
+echo -n $PASSWORD | faas-cli login --username admin --password-stdin
+
+faas-cli store deploy figlet
+faas-cli list
+
+# For Raspberry Pi
+faas-cli store list \
+ --platform armhf
+
+faas-cli store deploy figlet \
+ --platform armhf
+
+# Find out more at:
+# https://github.com/openfaas/faas
+
+Thanks for using arkade!
+```
+
+The output contains important information which we need to get started with ```faas-cli``` and ```OpenFaaS```. 
+
+## 200 - Forward the gateway to the machine
+
+As we have already install ```faas-cli```, we will now need to forward the gateway to the machine.
+
+First we will check the rollout status of the ```gateway``` by issuing the below command:
+
+```kubectl rollout status -n openfaas deploy/gateway```
