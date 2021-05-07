@@ -41,4 +41,26 @@ $ ls -la
 -rwxr--r--. 1 root root 2961 May  7 12:15 k3s.yaml
 ```
 
+Try again:
+
+```$ arkade install openfaas```
+
+Now we may see this:
+
+```
+Using Kubeconfig: /home/cloud_user/.kube/config
+Client: x86_64, Linux
+2021/05/07 14:06:13 User dir established as: /home/cloud_user/.arkade/
+"openfaas" already exists with the same configuration, skipping
+
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "openfaas" chart repository
+Update Complete. ⎈Happy Helming!⎈
+
+VALUES values.yaml
+Command: /home/cloud_user/.arkade/bin/helm [upgrade --install openfaas openfaas/openfaas --namespace openfaas --values /tmp/charts/openfaas/values.yaml --set operator.create=false --set openfaasImagePullPolicy=IfNotPresent --set faasnetes.imagePullPolicy=Always --set queueWorker.replicas=1 --set queueWorker.maxInflight=1 --set basic_auth=true --set clusterRole=false --set gateway.directFunctions=false --set basicAuthPlugin.replicas=1 --set gateway.replicas=1 --set ingressOperator.create=false --set serviceType=NodePort]
+Error: Kubernetes cluster unreachable: Get "http://localhost:8080/version?timeout=32s": dial tcp [::1]:8080: connect: connection refused
+Error: exit code 1, stderr: Error: Kubernetes cluster unreachable: Get "http://localhost:8080/version?timeout=32s": dial tcp [::1]:8080: connect: connection refused
+```
+
 
