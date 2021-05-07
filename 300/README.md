@@ -23,7 +23,7 @@ sh: line 176: faas-cli: command not found
 
 Check the success of the installation as follows:
 
-```$ faas-cli -version`
+```$ faas-cli -version```
 
 Should show something like:
 
