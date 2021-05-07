@@ -11,11 +11,16 @@ If you have ever got your hands on Azure Function or on AWS Lambda, then you mig
 See [README.md](./100/README.md)
 
 ## 200 - Installing k3s
+See [README.md](./200/README.md)
 
 ## 300 - Installing faas-cli
+See [README.md](./300/README.md)
 
 ## 400 - Installing arkade
+See [README.md](./400/README.md)
 
 ## 500 - Installing OpenFaaS
+See [README.md](./500/README.md)
 
 ## 600 - OpenFaaS UI (OpenFaaS Portal)
+See [README.md](./600/README.md)
