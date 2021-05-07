@@ -238,10 +238,38 @@ You may get below error:
 ```error: deployment "gateway" exceeded its progress deadline```
 
 
+more to fix above error ...
 
-more ...
 
+The above command should state that it is successfull. After this we can forward the gateway to the machine.
 
-## 300 - 
+```$ kubectl port-forward -n openfaas svc/gateway 8080:8080 &```
 
-more ...
+The ```&``` sign in the end of the command will execute it in the background. You can type in ```jobs``` to check the status of the job.
+
+We also need to check if the deployment is in ready state or not. To check the deployment state execute the command:
+
+```$ kubectl get deployments -n openfaas -l "release=openfaas, app=openfaas"```
+
+If any of the app deployed is not ready, you should be able to see it now. Check the ***READY*** column in the command output and you should see something ***0/1***. This would mean that the deployment is not ready and you should check back in sometime. Once you have the output like the one in the screenshot above, you are good to go.
+
+## 300 - Aquire the password for OpenFaaS UI
+
+Now the last step is to acquire the password for OpenFaaS UI which we will use to manage OpenFaaS. To do that execute the below command:
+
+```$ PASSWORD=$(kubectl get secret -n openfaas basic-auth -o jsonpath="{.data.basic-auth-password}" | base64 --decode; echo)
+echo -n $PASSWORD | faas-cli login --username admin --password-stdin```
+
+You can then view the password by printing the value of the ```PASSWORD``` variable using the ```echo``` command.
+
+```$ echo PASSWORD```
+
+***Copy and save the password securely!***
+
+## 400 - Access the openFaaS UI (OpenFaas Portal)
+
+Now let’s try accessing the OpenFaaS UI (OpenFaaS Portal) by navigating to the http://localhost:31112/ui or by using the IP address of machine instead of localhost if you are accessign it from another machine on your network.
+
+```Username``` is set to ```admin``` by default and the password is the one which you saved in the above step.
+
+Click on the ```Deploy New Function``` link located at the center of the home page or at the left side bar. You will be able to see the list of the different functions which you can deploy by just selecting the function from the list and then clicking the ```Deploy``` button at the bottom of the dialog.
