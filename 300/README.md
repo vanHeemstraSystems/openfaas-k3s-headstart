@@ -6,7 +6,7 @@ Install it like so:
 
 ```$ curl -sL https://cli.openfaas.com | sudo sh```
 
-It will show you somehting like this:
+It will show you something like this:
 
 ```
 Finding latest version from GitHub
