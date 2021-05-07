@@ -231,4 +231,17 @@ As we have already install ```faas-cli```, we will now need to forward the gatew
 
 First we will check the rollout status of the ```gateway``` by issuing the below command:
 
-```kubectl rollout status -n openfaas deploy/gateway```
+```$ kubectl rollout status -n openfaas deploy/gateway```
+
+You may get below error:
+
+```error: deployment "gateway" exceeded its progress deadline```
+
+
+
+more ...
+
+
+## 300 - 
+
+more ...
