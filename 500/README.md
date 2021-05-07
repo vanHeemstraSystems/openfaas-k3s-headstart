@@ -225,6 +225,21 @@ Thanks for using arkade!
 
 The output contains important information which we need to get started with ```faas-cli``` and ```OpenFaaS```. 
 
+Verify that openfaas has started:
+```
+$ kubectl -n openfaas get deployments -l "release=openfaas, app=openfaas"
+NAME                READY   UP-TO-DATE   AVAILABLE   AGE
+queue-worker        0/1     1            0           52m
+gateway             0/1     1            0           52m
+alertmanager        0/1     1            0           52m
+prometheus          0/1     1            0           52m
+nats                0/1     1            0           52m
+basic-auth-plugin   0/1     1            0           52m
+```
+
+
+
+
 ## 200 - Forward the gateway to the machine
 
 As we have already install ```faas-cli```, we will now need to forward the gateway to the machine.
@@ -237,9 +252,17 @@ You may get below error:
 
 ```error: deployment "gateway" exceeded its progress deadline```
 
+That happens if you didn't verify that that openfaas has started:
 
-more to fix above error ...
+```
+kubectl -n openfaas get deployments -l "release=openfaas, app=openfaas"
+```
 
+Now try again in case of above error:
+
+```
+$ kubectl rollout status -n openfaas deploy/gateway```
+```
 
 The above command should state that it is successfull. After this we can forward the gateway to the machine.
 
