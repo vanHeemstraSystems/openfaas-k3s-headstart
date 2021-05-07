@@ -1,4 +1,4 @@
-# 600 - Access the openFaaS UI (OpenFaas Portal)
+# 600 - Access the OpenFaaS UI (OpenFaas Portal)
 
 ***NOTE***: In the previous section you made a note of the password.
 
