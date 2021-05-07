@@ -252,16 +252,14 @@ You may get below error:
 
 ```error: deployment "gateway" exceeded its progress deadline```
 
-That happens if you didn't verify that that openfaas has started:
+That happens if ... ???
+
++++ ADD A SOLUTION TO THIS ERROR HERE +++
+
+Now try again after having fixed above error:
 
 ```
-kubectl -n openfaas get deployments -l "release=openfaas, app=openfaas"
-```
-
-Now try again in case of above error:
-
-```
-$ kubectl rollout status -n openfaas deploy/gateway```
+$ kubectl rollout status -n openfaas deploy/gateway
 ```
 
 The above command should state that it is successfull. After this we can forward the gateway to the machine.
