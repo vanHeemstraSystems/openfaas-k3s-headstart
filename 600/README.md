@@ -2,7 +2,7 @@
 
 ***NOTE***: In the previous section you made a note of the password.
 
-Now let’s try accessing the OpenFaaS UI (OpenFaaS Portal) by navigating to the http://localhost:31112/ui or by using the IP address of machine instead of localhost if you are accessign it from another machine on your network.
+Now let’s try accessing the OpenFaaS UI (OpenFaaS Portal) by navigating to the http://localhost:31112/ui or by using the IP address of machine instead of localhost if you are accessing it from another machine on your network.
 
 ```Username``` is set to ```admin``` by default and the password is the one which you saved in the above step.
 
