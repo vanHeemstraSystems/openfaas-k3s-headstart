@@ -63,4 +63,94 @@ Error: Kubernetes cluster unreachable: Get "http://localhost:8080/version?timeou
 Error: exit code 1, stderr: Error: Kubernetes cluster unreachable: Get "http://localhost:8080/version?timeout=32s": dial tcp [::1]:8080: connect: connection refused
 ```
 
+If you scroll down to the end of the above output you will notice that there is another error which states that ```Kubernetes cluster unreachable```.
+
+Even knowing that ```k3s``` service is up and running I was not able to figure out what could be a problem. So I searched the web and found [this issue thread on Github](https://github.com/k3s-io/k3s/issues/1126) in which one of the [commenters](https://github.com/k3s-io/k3s/issues/1126#issuecomment-560504204) were able to fix this error by running the below command.
+
+```$ kubectl config view --raw > ~/.kube/config```
+
+After this, you can run the installation of OpenFaaS using arkade again and this time it should be successfull. Here is the output on my system after the installation was successfull.
+
+```$ arkade install openfaas```
+
+As a result:
+
+```
+Using Kubeconfig: /home/cloud_user/.kube/config
+[Warning] unable to create secret basic-auth, may already exist: Error from server (AlreadyExists): secrets "basic-auth" already exists
+Client: x86_64, Linux
+2021/05/07 14:11:11 User dir established as: /home/cloud_user/.arkade/
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /home/cloud_user/.kube/config
+WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /home/cloud_user/.kube/config
+"openfaas" already exists with the same configuration, skipping
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /home/cloud_user/.kube/config
+WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /home/cloud_user/.kube/config
+
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /home/cloud_user/.kube/config
+WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /home/cloud_user/.kube/config
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "openfaas" chart repository
+Update Complete. ⎈Happy Helming!⎈
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /home/cloud_user/.kube/config
+WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /home/cloud_user/.kube/config
+
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /home/cloud_user/.kube/config
+WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /home/cloud_user/.kube/config
+VALUES values.yaml
+Command: /home/cloud_user/.arkade/bin/helm [upgrade --install openfaas openfaas/openfaas --namespace openfaas --values /tmp/charts/openfaas/values.yaml --set serviceType=NodePort --set operator.create=false --set openfaasImagePullPolicy=IfNotPresent --set faasnetes.imagePullPolicy=Always --set basicAuthPlugin.replicas=1 --set ingressOperator.create=false --set queueWorker.replicas=1 --set queueWorker.maxInflight=1 --set clusterRole=false --set gateway.directFunctions=false --set gateway.replicas=1 --set basic_auth=true]
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /home/cloud_user/.kube/config
+WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /home/cloud_user/.kube/config
+Release "openfaas" does not exist. Installing it now.
+NAME: openfaas
+LAST DEPLOYED: Fri May  7 14:11:12 2021
+NAMESPACE: openfaas
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+To verify that openfaas has started, run:
+
+  kubectl -n openfaas get deployments -l "release=openfaas, app=openfaas"
+2021/05/07 14:11:13 stderr: WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /home/cloud_user/.kube/config
+WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /home/cloud_user/.kube/config
+
+=======================================================================
+= OpenFaaS has been installed.                                        =
+=======================================================================
+
+# Get the faas-cli
+curl -SLsf https://cli.openfaas.com | sudo sh
+
+# Forward the gateway to your machine
+kubectl rollout status -n openfaas deploy/gateway
+kubectl port-forward -n openfaas svc/gateway 8080:8080 &
+
+# If basic auth is enabled, you can now log into your gateway:
+PASSWORD=$(kubectl get secret -n openfaas basic-auth -o jsonpath="{.data.basic-auth-password}" | base64 --decode; echo)
+echo -n $PASSWORD | faas-cli login --username admin --password-stdin
+
+faas-cli store deploy figlet
+faas-cli list
+
+# For Raspberry Pi
+faas-cli store list \
+ --platform armhf
+
+faas-cli store deploy figlet \
+ --platform armhf
+
+# Find out more at:
+# https://github.com/openfaas/faas
+
+Thanks for using arkade!
+```
+
+To address the following warning:
+
+- WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /home/cloud_user/.kube/config
+
+Change the permissions on this file as follows:
+
+```sudo chmod 600 /home/cloud_user/.kube/config```
+
 
