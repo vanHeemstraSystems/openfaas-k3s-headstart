@@ -101,3 +101,32 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/k3s.service to 
 After the installation is completed, you can check if the k3s service is running by executing the below command.
 
 ```$ sudo systemctl status k3s```
+
+It will show you something like this:
+
+```
+● k3s.service - Lightweight Kubernetes
+   Loaded: loaded (/etc/systemd/system/k3s.service; enabled; vendor preset: disabled)
+   Active: active (running) since Fri 2021-05-07 12:15:28 UTC; 4min 8s ago
+     Docs: https://k3s.io
+  Process: 3679 ExecStartPre=/sbin/modprobe overlay (code=exited, status=0/SUCCESS)
+  Process: 3675 ExecStartPre=/sbin/modprobe br_netfilter (code=exited, status=0/SUCCESS)
+ Main PID: 3684 (k3s-server)
+    Tasks: 11
+   Memory: 775.2M
+   CGroup: /system.slice/k3s.service
+           └─3684 /usr/local/bin/k3s server
+
+May 07 12:19:32 ae464350731c.mylabserver.com k3s[3684]: time="2021-05-07T12:19:32.443367875Z" level=info msg="Waiting for co...ound"
+May 07 12:19:33 ae464350731c.mylabserver.com k3s[3684]: W0507 12:19:33.097302    3684 garbagecollector.go:703] failed to dis...uest]
+May 07 12:19:33 ae464350731c.mylabserver.com k3s[3684]: time="2021-05-07T12:19:33.446849293Z" level=info msg="Waiting for co...ound"
+May 07 12:19:34 ae464350731c.mylabserver.com k3s[3684]: time="2021-05-07T12:19:34.450812241Z" level=info msg="Waiting for co...ound"
+May 07 12:19:35 ae464350731c.mylabserver.com k3s[3684]: time="2021-05-07T12:19:35.437649343Z" level=info msg="Cluster-Http-S...cate"
+May 07 12:19:35 ae464350731c.mylabserver.com k3s[3684]: time="2021-05-07T12:19:35.455226397Z" level=info msg="Waiting for co...ound"
+May 07 12:19:35 ae464350731c.mylabserver.com k3s[3684]: time="2021-05-07T12:19:35.602732842Z" level=info msg="certificate CN... UTC"
+May 07 12:19:35 ae464350731c.mylabserver.com k3s[3684]: time="2021-05-07T12:19:35.754647034Z" level=info msg="certificate CN... UTC"
+May 07 12:19:35 ae464350731c.mylabserver.com k3s[3684]: time="2021-05-07T12:19:35.760718309Z" level=error msg="Failed to retrieve...
+May 07 12:19:36 ae464350731c.mylabserver.com k3s[3684]: time="2021-05-07T12:19:36.459043912Z" level=info msg="Waiting for co...ound"
+Hint: Some lines were ellipsized, use -l to show in full.
+[cloud_user@ae464350731c openfaas-k3s-headstart]$ 
+```
