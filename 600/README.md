@@ -1,9 +1,14 @@
-# 600 - Access OpenFaaS UI (OpenFaas Portal)
+# 600 - Aquire Password for OpenFaaS UI (OpenFaaS Portal)
 
-***NOTE***: In the previous section you made a note of the password.
+Now the last step is to acquire the password for OpenFaaS UI which we will use to manage OpenFaaS. To do that execute the below command:
 
-Now let’s try accessing the OpenFaaS UI (OpenFaaS Portal) by navigating to the http://localhost:31112/ui or by using the IP address of machine instead of localhost if you are accessing it from another machine on your network.
+```
+$ PASSWORD=$(kubectl get secret -n openfaas basic-auth -o jsonpath="{.data.basic-auth-password}" | base64 --decode; echo)
+$ echo -n $PASSWORD | faas-cli login --username admin --password-stdin
+```
 
-```Username``` is set to ```admin``` by default and the password is the one which you saved in the above step.
+You can then view the password by printing the value of the ```PASSWORD``` variable using the ```echo``` command.
 
-Click on the ```Deploy New Function``` link located at the center of the home page or at the left side bar. You will be able to see the list of the different functions which you can deploy by just selecting the function from the list and then clicking the ```Deploy``` button at the bottom of the dialog.
+```$ echo PASSWORD```
+
+***Copy and save the password securely!***
