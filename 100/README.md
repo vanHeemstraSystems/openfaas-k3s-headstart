@@ -1,3 +1,7 @@
 # 100 - Prerequisites
 
-None
+## 100 - Git Client (optional)
+
+Install Git client if you want to clone a repository (like this one) from where you will develop and build.
+
+See https://github.com/vanHeemstraSystems/how-to-install-git-on-centos-7
