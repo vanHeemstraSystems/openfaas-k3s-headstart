@@ -237,7 +237,7 @@ nats                0/1     1            0           52m
 basic-auth-plugin   0/1     1            0           52m
 ```
 
-
+***NOTE*** that these nodes are UP-TO-DATE but not AVAILABLE.
 
 
 ## 200 - Forward the gateway to the machine
@@ -252,7 +252,9 @@ You may get below error:
 
 ```error: deployment "gateway" exceeded its progress deadline```
 
-That happens if ... ???
+That happens if the deployment doesn’t proceed until the deadline is met, Kubernetes marks the deployment status as failed, which the rollout status command will be able to pick up.
+
+See https://medium.com/polarsquad/check-your-kubernetes-deployments-46dbfbc47a7c
 
 +++ ADD A SOLUTION TO THIS ERROR HERE +++
 
