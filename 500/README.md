@@ -265,6 +265,66 @@ error: no rollout history found for deployment "gateway"
 
 +++ NOW WHAT .... : (   ADD A SOLUTION HERE... +++
 
+Try the same command again:
+
+```
+$ arkade install openfaas
+Using Kubeconfig: /home/cloud_user/.kube/config
+[Warning] unable to create secret basic-auth, may already exist: Error from server (AlreadyExists): secrets "basic-auth" already exists
+Client: x86_64, Linux
+2021/05/12 14:25:28 User dir established as: /home/cloud_user/.arkade/
+"openfaas" already exists with the same configuration, skipping
+
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "openfaas" chart repository
+Update Complete. ⎈Happy Helming!⎈
+
+VALUES values.yaml
+Command: /home/cloud_user/.arkade/bin/helm [upgrade --install openfaas openfaas/openfaas --namespace openfaas --values /tmp/charts/openfaas/values.yaml --set queueWorker.maxInflight=1 --set openfaasImagePullPolicy=IfNotPresent --set faasnetes.imagePullPolicy=Always --set queueWorker.replicas=1 --set basicAuthPlugin.replicas=1 --set gateway.replicas=1 --set ingressOperator.create=false --set basic_auth=true --set serviceType=NodePort --set clusterRole=false --set gateway.directFunctions=false --set operator.create=false]
+Release "openfaas" has been upgraded. Happy Helming!
+NAME: openfaas
+LAST DEPLOYED: Wed May 12 14:25:33 2021
+NAMESPACE: openfaas
+STATUS: deployed
+REVISION: 4
+TEST SUITE: None
+NOTES:
+To verify that openfaas has started, run:
+
+  kubectl -n openfaas get deployments -l "release=openfaas, app=openfaas"
+=======================================================================
+= OpenFaaS has been installed.                                        =
+=======================================================================
+
+# Get the faas-cli
+curl -SLsf https://cli.openfaas.com | sudo sh
+
+# Forward the gateway to your machine
+kubectl rollout status -n openfaas deploy/gateway
+kubectl port-forward -n openfaas svc/gateway 8080:8080 &
+
+# If basic auth is enabled, you can now log into your gateway:
+PASSWORD=$(kubectl get secret -n openfaas basic-auth -o jsonpath="{.data.basic-auth-password}" | base64 --decode; echo)
+echo -n $PASSWORD | faas-cli login --username admin --password-stdin
+
+faas-cli store deploy figlet
+faas-cli list
+
+# For Raspberry Pi
+faas-cli store list \
+ --platform armhf
+
+faas-cli store deploy figlet \
+ --platform armhf
+
+# Find out more at:
+# https://github.com/openfaas/faas
+
+Thanks for using arkade!
+```
+
++++ END OF NOW WHAT +++
+
 Now try again after having fixed above error:
 
 ```
