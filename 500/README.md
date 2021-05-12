@@ -321,7 +321,12 @@ $ systemctl status kube-apiserver -l
 Unit kube-apiserver.service could not be found.
 ```
 
-... more?
+... more? Yes, INSTALL DOCKER !!! and add it to the requirements! It was not installed
+
+```
+$ docker version
+-bash: docker: command not found
+```
 
 +++ +++
 
