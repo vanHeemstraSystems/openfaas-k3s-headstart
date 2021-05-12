@@ -258,6 +258,12 @@ See https://medium.com/polarsquad/check-your-kubernetes-deployments-46dbfbc47a7c
 
 +++ ADD A SOLUTION TO THIS ERROR HERE +++
 
+To get back to a stable, working state, we can use the ```rollout undo``` command to bring back the working pods and clean up the failed deployment.
+
+```
+$ kubectl rollout undo -n openfaas deploy/gateway
+```
+
 Now try again after having fixed above error:
 
 ```
