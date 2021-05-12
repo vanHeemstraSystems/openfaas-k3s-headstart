@@ -409,7 +409,11 @@ arkade install openfaas
 
 The above command should state that it is successfull. After this we can forward the gateway to the machine.
 
-```$ kubectl port-forward -n openfaas svc/gateway 8080:8080 &```
+```
+$ kubectl port-forward -n openfaas svc/gateway 8080:8080 &
+[1] 9517
+[cloud_user@ae464350731c ~]$ error: unable to forward port because pod is not running. Current status=Pending
+```
 
 The ```&``` sign in the end of the command will execute it in the background. You can type in ```jobs``` to check the status of the job.
 
@@ -417,8 +421,6 @@ We also need to check if the deployment is in ready state or not. To check the d
 
 ```
 $ kubectl get deployments -n openfaas -l "release=openfaas, app=openfaas"
-[1] 9517
-[cloud_user@ae464350731c ~]$ error: unable to forward port because pod is not running. Current status=Pending
 ```
 
 If any of the app deployed is not ready, you should be able to see it now. Check the ***READY*** column in the command output and you should see something ***0/1***. This would mean that the deployment is not ready and you should check back in sometime. Once you have the output like the one in the screenshot above, you are good to go.
