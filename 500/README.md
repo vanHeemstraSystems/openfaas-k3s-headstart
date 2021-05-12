@@ -287,13 +287,14 @@ Try once more:
 ```$ arkade install openfaas```
 
 
-NOW WHAT ???
-
-
+And again followed by:
 
 ```
 $ kubectl rollout status -n openfaas deploy/gateway
+Waiting for deployment "gateway" rollout to finish: 0 of 1 updated replicas are available...
 ```
+
++++ WHAT TO DO IF THIS FAILS +++
 
 The above command should state that it is successfull. After this we can forward the gateway to the machine.
 
