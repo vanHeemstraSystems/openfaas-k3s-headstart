@@ -38,7 +38,7 @@ There is a permission error in /etc/rancher/k3s/k3s.yaml. For the resolution of 
 ```
 $ cd /etc/rancher/k3s/
 -rw-------. 1 root root 2961 May  7 12:15 k3s.yaml
-$ chmod 744 k3s.yaml 
+$ sudo chmod 744 k3s.yaml 
 $ ls -la
 -rwxr--r--. 1 root root 2961 May  7 12:15 k3s.yaml
 ```
