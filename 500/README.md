@@ -328,6 +328,83 @@ $ docker version
 -bash: docker: command not found
 ```
 
+AFTER INSTALLING DOCKER and DOCKER-COMPOSE and Setenforce Permissive TRY AGAIN:
+
+```
+$ arkade install openfaas
+Using Kubeconfig: /home/cloud_user/.kube/config
+[Warning] unable to create secret basic-auth, may already exist: Error from server (AlreadyExists): secrets "basic-auth" already exists
+Client: x86_64, Linux
+2021/05/12 15:17:12 User dir established as: /home/cloud_user/.arkade/
+"openfaas" already exists with the same configuration, skipping
+
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "openfaas" chart repository
+...Successfully got an update from the "jetstack" chart repository
+Update Complete. ⎈Happy Helming!⎈
+
+VALUES values.yaml
+Command: /home/cloud_user/.arkade/bin/helm [upgrade --install openfaas openfaas/openfaas --namespace openfaas --values /tmp/charts/openfaas/values.yaml --set basic_auth=true --set serviceType=NodePort --set operator.create=false --set gateway.replicas=1 --set queueWorker.replicas=1 --set queueWorker.maxInflight=1 --set basicAuthPlugin.replicas=1 --set ingressOperator.create=false --set clusterRole=false --set gateway.directFunctions=false --set openfaasImagePullPolicy=IfNotPresent --set faasnetes.imagePullPolicy=Always]
+Release "openfaas" has been upgraded. Happy Helming!
+NAME: openfaas
+LAST DEPLOYED: Wed May 12 15:17:14 2021
+NAMESPACE: openfaas
+STATUS: deployed
+REVISION: 7
+TEST SUITE: None
+NOTES:
+To verify that openfaas has started, run:
+
+  kubectl -n openfaas get deployments -l "release=openfaas, app=openfaas"
+=======================================================================
+= OpenFaaS has been installed.                                        =
+=======================================================================
+
+# Get the faas-cli
+curl -SLsf https://cli.openfaas.com | sudo sh
+
+# Forward the gateway to your machine
+kubectl rollout status -n openfaas deploy/gateway
+kubectl port-forward -n openfaas svc/gateway 8080:8080 &
+
+# If basic auth is enabled, you can now log into your gateway:
+PASSWORD=$(kubectl get secret -n openfaas basic-auth -o jsonpath="{.data.basic-auth-password}" | base64 --decode; echo)
+echo -n $PASSWORD | faas-cli login --username admin --password-stdin
+
+faas-cli store deploy figlet
+faas-cli list
+
+# For Raspberry Pi
+faas-cli store list \
+ --platform armhf
+
+faas-cli store deploy figlet \
+ --platform armhf
+
+# Find out more at:
+# https://github.com/openfaas/faas
+
+Thanks for using arkade!
+```
+
+```
+$ kubectl -n openfaas delete deployments -l "release=openfaas, app=openfaas"
+deployment.apps "nats" deleted
+deployment.apps "basic-auth-plugin" deleted
+deployment.apps "queue-worker" deleted
+deployment.apps "alertmanager" deleted
+deployment.apps "prometheus" deleted
+deployment.apps "gateway" deleted
+```
+
+```
+$ kubectl -n openfaas get deployments -l "release=openfaas, app=openfaas"
+No resources found in openfaas namespace.
+```
+
+```
+arkade install openfaas
+```
 +++ +++
 
 The above command should state that it is successfull. After this we can forward the gateway to the machine.
