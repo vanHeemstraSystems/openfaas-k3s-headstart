@@ -297,6 +297,34 @@ error: deployment "gateway" exceeded its progress deadline
 
 +++ WHAT TO DO IF THIS FAILS STILL +++
 
+Try this:
+
+```
+$ kubectl top node
+Error from server (ServiceUnavailable): the server is currently unable to handle the request (get nodes.metrics.k8s.io)
+```
+
+Or this:
+
+```
+$ kubectl get pods -n kube-system NAME                                      READY   STATUS    RESTARTS   AGE
+helm-install-traefik-b6m2p                0/1     Pending   0          5d2h
+local-path-provisioner-5ff76fc89d-rcb2w   0/1     Pending   0          5d2h
+metrics-server-86cbb8457f-k6hmr           0/1     Pending   0          5d2h
+coredns-854c77959c-f9k2s                  0/1     Pending   0          5d2h
+```
+
+And this:
+
+```
+$ systemctl status kube-apiserver -l
+Unit kube-apiserver.service could not be found.
+```
+
+... more?
+
++++ +++
+
 The above command should state that it is successfull. After this we can forward the gateway to the machine.
 
 ```$ kubectl port-forward -n openfaas svc/gateway 8080:8080 &```
