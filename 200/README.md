@@ -1,5 +1,7 @@
 # 200 - Installing k3s
 
+***Note***: See for k3s additional installation instructions https://github.com/vanHeemstraSystems/k3s-headstart
+
 I am making use of Lightweight Kubernetes also known as k3s. This is a certified Kubernetes distribution built for IoT and Edge computing.
 
 ```$ curl -sfL https://get.k3s.io | sh -```
